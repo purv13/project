@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Listings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <header class="bg-blue-600 text-white text-center py-6">
+        <h1 class="text-3xl font-bold">Manage Listings</h1>
+    </header>
+
+    <!-- Listing Management -->
+    <main class="container mx-auto py-8">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <!-- Search Listings -->
+            <div class="mb-6">
+                <input type="text" placeholder="Search listings..." class="w-full p-3 border border-gray-300 rounded-lg">
+            </div>
+
+            <!-- Listings Table -->
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr class="w-full text-left text-gray-600 bg-gray-200 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6">Property</th>
+                        <th class="py-3 px-6">Owner</th>
+                        <th class="py-3 px-6">Status</th>
+                        <th class="py-3 px-6">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                    <!-- Listing 1 -->
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6">Sunset Apartments</td>
+                        <td class="py-3 px-6">John Doe</td>
+                        <td class="py-3 px-6">Pending</td>
+                        <td class="py-3 px-6">
+                            <a href="#" class="text-green-600 hover:underline">Approve</a> | 
+                            <a href="#" class="text-blue-600 hover:underline">Edit</a> | 
+                            <a href="#" class="text-red-600 hover:underline">Delete</a>
+                        </td>
+                    </tr>
+                    <!-- More Listings -->
+                    <!-- Repeat as needed -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center py-4">
+        <p class="text-sm">© 2024 City Navigator Admin Panel</p>
+    </footer>
+
+</body>
+</html>

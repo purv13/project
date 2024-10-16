@@ -20,24 +20,41 @@
                 <div class="flex-shrink-0 flex items-center pt-5 -m-9">
                     <img class="h-36 w-auto" src="images/city_navigator-removebg-preview.png" alt="Logo">
                 </div>
-
-                <!-- Navbar links on the right -->
-                <div class="hidden md:flex space-x-8 items-center">
+    
+                <!-- Navbar links in the center -->
+                <div class="hidden md:flex space-x-8 items-center -mr-96">
                     <a href="index.html" class="relative px-3 py-2 hover:underline hover:text-gray-600 rounded-md text-sm font-medium group"> Home </a>
                     <a href="category.html" class="text-gray-800 hover:underline hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Category</a>
                     <a href="listing.html" class="text-gray-800 hover:underline hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Listing</a>
                     <a href="contact.html" class="text-gray-800 hover:underline hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Contact Us</a>
+                    
                     <!-- Add Your Listing with plus sign -->
-                    <a href="#" class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-4 py-2  rounded-md">
+                    <a href="yourlisting.html" class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-4 py-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.75v14.5M5.75 12h14.5"></path>
                         </svg>
                         Add Your Listing
                     </a>
                 </div>
+    
+                <!-- Login Dropdown Menu on the right -->
+                <div class="relative group pt-4 -mr-24">
+                    <button class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-2 py-1 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
+                        </svg>
+                        Login
+                    </button>
+                    <!-- Dropdown menu for User/Admin Login -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
+                        <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">User Login</a>
+                        <a href="adminlogin.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Admin Login</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
+    
 
 
     <!-- Header Section -->
@@ -92,7 +109,7 @@
 <div class="max-w-7xl mx-auto mt-20 grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
     
     <!-- Circle Item: Theatre -->
-    <a href="theatre-page.html" class="flex flex-col items-center group mt-24">
+    <a href="theatre.html" class="flex flex-col items-center group mt-24">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 duration-300">
             <img src="images/cinema.png" alt="Theatre Logo" class="object-contain w-10 h-10">
       
@@ -101,7 +118,7 @@
     </a>
 
     <!-- Circle Item: Shopping -->
-    <a href="shopping-page.html" class="flex flex-col items-center group mt-24">
+    <a href="shopping.html" class="flex flex-col items-center group mt-24">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 duration-300">
             <img src="images/online-shopping.png" alt="Shopping Logo" class="object-cover w-10 h-10">
         </div>
@@ -109,7 +126,7 @@
     </a>
 
     <!-- Circle Item: Food -->
-    <a href="food-page.html" class="flex flex-col items-center group mt-24">
+    <a href="food.html" class="flex flex-col items-center group mt-24">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 duration-300">
             <img src="images/burger.png" alt="Food Logo" class="object-cover w-10 h-10">
         </div>
@@ -117,7 +134,7 @@
     </a>
 
     <!-- Circle Item: Apartment -->
-    <a href="apartment-page.html" class="flex flex-col items-center group mt-24">
+    <a href="appartment.html" class="flex flex-col items-center group mt-24">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 duration-300">
             <img src="images/appartment.png" alt="Apartment Logo" class="object-cover w-10 h-10">
         </div>
@@ -125,7 +142,7 @@
     </a>
 
     <!-- Circle Item: Hotel -->
-    <a href="hotel-page.html" class="flex flex-col items-center group mt-24">
+    <a href="hotels.html" class="flex flex-col items-center group mt-24">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 duration-300">
             <img src="images/review.png" alt="Hotel Logo" class="object-cover w-10 h-10">
         </div>
@@ -212,50 +229,51 @@
 
         // Switch content based on the selected category
         switch (category) {
-            case 'Theatre':
-                content = `
-                    <img src="https://images.pexels.com/photos/375885/pexels-photo-375885.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Theatre Image" class="w-full h-64 object-cover rounded-md mb-6"> <!-- Larger image -->
-                    <h2 class="text-3xl font-bold mb-4">Theatre</h2> <!-- Larger title -->
-                    <p class="text-gray-600 text-lg mb-6">Explore top-rated theatres in your city for the best cinematic experience. Check out the latest shows and performances.</p> <!-- Larger description -->
-                    <button class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</button> <!-- Larger button -->
-                `;
-                break;
-            case 'Hotel':
-                content = `
-                    <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Hotel Image" class="w-full h-64 object-cover rounded-md mb-6">
-                    <h2 class="text-3xl font-bold mb-4">Hotel</h2>
-                    <p class="text-gray-600 text-lg mb-6">Find luxury hotels and budget-friendly stays. Your comfortable home away from home awaits.</p>
-                    <button class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</button>
-                `;
-                break;
-            case 'Shopping':
-                  content = `
-                    <img src="https://images.pexels.com/photos/1087727/pexels-photo-1087727.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Shopping Image" class="w-full h-64 object-cover rounded-md mb-6">
-                    <h2 class="text-3xl font-bold mb-4">Shopping</h2>
-                    <p class="text-gray-600 text-lg mb-6">Shop at the best malls, stores, and boutiques for clothing, electronics, and more.</p>
-                    <button class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</button>
-                `;
-                break;
-            case 'Food':
-                content = `
-                    <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Food Image" class="w-full h-64 object-cover rounded-md mb-6">
-                    <h2 class="text-3xl font-bold mb-4">Food</h2>
-                    <p class="text-gray-600 text-lg mb-6">Discover popular restaurants, cafes, and food joints to satisfy your taste buds.</p>
-                    <button class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</button>
-                `;
-                break;
-            case 'Apartment':
-                content = `
-                    <img src="https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Apartment Image" class="w-full h-64 object-cover rounded-md mb-6">
-                    <h2 class="text-3xl font-bold mb-4">Apartment</h2>
-                    <p class="text-gray-600 text-lg mb-6">Browse through top apartment listings for rent or purchase in prime locations.</p>
-                    <button class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</button>
-                `;
-                break;
-            default:
-                content = `<p class="text-gray-600 text-lg">Click on any category on the left to see more details.</p>`;
-                break;
-        }
+    case 'Theatre':
+        content = `
+            <img src="https://images.pexels.com/photos/375885/pexels-photo-375885.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Theatre Image" class="w-full h-64 object-cover rounded-md mb-6"> <!-- Larger image -->
+            <h2 class="text-3xl font-bold mb-4">Theatre</h2> <!-- Larger title -->
+            <p class="text-gray-600 text-lg mb-6">Explore top-rated theatres in your city for the best cinematic experience. Check out the latest shows and performances.</p> <!-- Larger description -->
+            <a href="theatre.html" class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</a> <!-- Link to theatre listings -->
+        `;
+        break;
+    case 'Hotel':
+        content = `
+            <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Hotel Image" class="w-full h-64 object-cover rounded-md mb-6">
+            <h2 class="text-3xl font-bold mb-4">Hotel</h2>
+            <p class="text-gray-600 text-lg mb-6">Find luxury hotels and budget-friendly stays. Your comfortable home away from home awaits.</p>
+            <a href="hotels.html" class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</a> <!-- Link to hotel listings -->
+        `;
+        break;
+    case 'Shopping':
+        content = `
+            <img src="https://images.pexels.com/photos/1087727/pexels-photo-1087727.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Shopping Image" class="w-full h-64 object-cover rounded-md mb-6">
+            <h2 class="text-3xl font-bold mb-4">Shopping</h2>
+            <p class="text-gray-600 text-lg mb-6">Shop at the best malls, stores, and boutiques for clothing, electronics, and more.</p>
+            <a href="shopping.html" class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</a> <!-- Link to shopping listings -->
+        `;
+        break;
+    case 'Food':
+        content = `
+            <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Food Image" class="w-full h-64 object-cover rounded-md mb-6">
+            <h2 class="text-3xl font-bold mb-4">Food</h2>
+            <p class="text-gray-600 text-lg mb-6">Discover popular restaurants, cafes, and food joints to satisfy your taste buds.</p>
+            <a href="food.html" class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</a> <!-- Link to food listings -->
+        `;
+        break;
+    case 'Apartment':
+        content = `
+            <img src="https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Apartment Image" class="w-full h-64 object-cover rounded-md mb-6">
+            <h2 class="text-3xl font-bold mb-4">Apartment</h2>
+            <p class="text-gray-600 text-lg mb-6">Browse through top apartment listings for rent or purchase in prime locations.</p>
+            <a href="appartment.html" class="bg-blue-600 text-white px-6 py-3 text-lg rounded-md hover:bg-blue-500">Discover More</a> <!-- Link to apartment listings -->
+        `;
+        break;
+    default:
+        content = `<p class="text-gray-600 text-lg">Click on any category on the left to see more details.</p>`;
+        break;
+}
+
 
         // Remove active class from all category items
         const items = document.querySelectorAll('.category-item');
