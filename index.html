@@ -29,7 +29,7 @@
                     <a href="contact.html" class="text-gray-800 hover:underline hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Contact Us</a>
                     
                     <!-- Add Your Listing with plus sign -->
-                    <a href="yourlisting.html" class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-4 py-2 rounded-md">
+                    <a id="addListingButton" href="yourlisting.html" class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-4 py-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.75v14.5M5.75 12h14.5"></path>
                         </svg>
@@ -37,25 +37,100 @@
                     </a>
                 </div>
     
-                <!-- Login Dropdown Menu on the right -->
-                <div class="relative group pt-4 -mr-24">
-                    <button class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-2 py-1 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
-                        </svg>
-                        Login
-                    </button>
-                    <!-- Dropdown menu for User/Admin Login -->
-                    <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
-                        <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">User Login</a>
-                        <a href="adminlogin.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Admin Login</a>
-                    </div>
+               <!-- Login Dropdown Menu on the right -->
+<div id="auth-button" class="relative group pt-4 -mr-24">
+    <button class="flex items-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition duration-300 ease-in-out">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
+        </svg>
+        Login
+    </button>
+    <!-- Dropdown menu for User/Admin Login -->
+    <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
+        <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">User Login</a>
+    </div>
+</div>
+
+
                 </div>
             </div>
         </div>
     </nav>
     
+    <script>
+        // Function to check session status and toggle the button
+        async function updateAuthButton() {
+    try {
+        const response = await fetch('/check-session');
+        const data = await response.json();
 
+        const authButtonContainer = document.getElementById('auth-button');
+        authButtonContainer.innerHTML = ''; // Clear the existing content
+
+        if (data.loggedIn) {
+            // User is logged in, create Logout button
+            const logoutForm = document.createElement('form');
+            logoutForm.action = '/logout';
+            logoutForm.method = 'POST';
+
+            const logoutButton = document.createElement('button');
+            logoutButton.type = 'submit';
+            logoutButton.className = 'flex items-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition duration-300 ease-in-out';
+            logoutButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
+                </svg>
+                Logout
+            `;
+
+            logoutForm.appendChild(logoutButton);
+            authButtonContainer.appendChild(logoutForm);
+        } else {
+            // User is not logged in, create Login button
+            const loginLink = document.createElement('a');
+            loginLink.href = 'login.html';
+            loginLink.className = 'flex items-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition duration-300 ease-in-out';
+            loginLink.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
+                </svg>
+                Login
+            `;
+
+            authButtonContainer.appendChild(loginLink);
+        }
+    } catch (error) {
+        console.error('Error checking session status:', error);
+    }
+}
+
+ // Event listener for Add Your Listing button
+ document.getElementById("addListingButton").addEventListener("click", async function (event) {
+            event.preventDefault(); // Prevents the default link action
+
+            try {
+                const response = await fetch('/check-session');
+                const data = await response.json();
+
+                if (data.loggedIn) {
+                    // If logged in, redirect to the listing page
+                    window.location.href = "yourlisting.html";
+                } else {
+                    // If not logged in, redirect to login page
+                    window.location.href = "login.html";
+                }
+            } catch (error) {
+                console.error('Error checking session status:', error);
+                // Optionally show an error message or redirect to login
+                window.location.href = "login.html";
+            }
+        });
+
+
+
+        // Call the function when the page loads
+        window.onload = updateAuthButton;
+    </script>
 
     <!-- Header Section -->
     <section class="bg-blue-400 text-white py-52 ">
@@ -64,46 +139,7 @@
             <p class="mt-2">Discover, search, and explore the best places around you!</p>
         </div>
 
-        <!-- Selection Panel -->
-        <div class="max-w-5xl mx-auto p-6 bg-white shadow-lg mt-8 rounded-lg">
-            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-                <!-- Area Selection with placeholder text visible -->
-                <div class="relative w-full md:w-1/4">
-                    <select class="w-full appearance-none px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black text-gray-600">
-                        <option disabled selected>Select Area</option>
-                        <option>Area 1</option>
-                        <option>Area 2</option>
-                        <option>Area 3</option>
-                    </select>
-                    <!-- Custom arrow for the select box -->
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-
-                <div class="relative w-full md:w-1/4">
-                    <select class="w-full appearance-none px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black text-gray-600">
-                        <option disabled selected>Select Location</option>
-                        <option>Location 1</option>
-                        <option>Location 2</option>
-                        <option>Location 3</option>
-                    </select>
-                    <!-- Custom arrow for the select box -->
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-
-                <!-- Search Box with magnifying glass icon -->
-                <div class="relative w-full md:w-1/4">
-                    <input type="text" placeholder="Search..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black text-gray-600">
-                    <!-- Magnifying glass icon inside input -->
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
     <!-- Circular Logos with Text -->
 <div class="max-w-7xl mx-auto mt-20 grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
@@ -297,82 +333,228 @@
 </script>
 
 
-<div class="py-10">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-6">Recently Listed</h2>
-        <div class="space-y-4">
-            <!-- Card 1 -->
-            <div class="bg-white shadow-lg rounded-lg flex p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                <img src="images/coffee in downtown.webp" alt="Listing 1" class="rounded-l-lg w-32 h-32 object-cover">
-                <div class="ml-4 flex flex-col justify-between">
-                    <div>
-                        <h4 class="font-bold text-lg">Coffee Shop in Downtown</h4>
-                        <p class="text-gray-600">by: Joe's Realty</p>
-                        <div class="flex items-center mt-2">
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-gray-400"><i class="fa fa-star"></i></span>
-                        </div>
-                        <span class="text-gray-800 font-bold">$2,000 / month</span>
-                        <p class="text-gray-600">Details: <em>1200 sq ft</em></p>
+    <style>
+        /* Additional styles for hover and click effects */
+        .review-card:hover {
+            transform: scale(1.05); /* Slight scale on hover */
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Card animation when clicked */
+        .review-card:active {
+            transform: scale(1.02); /* Slight scale down on click */
+            transition: transform 0.1s ease;
+        }
+    </style>
+
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Customer Reviews</h1>
+
+        <!-- Reviews Section -->
+        <div id="reviewsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Review Card 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('John Doe', 4, 'Great product! Highly recommend it to everyone looking for quality.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        J
                     </div>
-                    <div class="mt-2">
-                        <button class="bg-blue-500 text-white rounded-lg py-1 px-4 hover:bg-blue-600 transition duration-200">View Details</button>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">John Doe</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★☆</span>
+                        </div>
                     </div>
                 </div>
+                <p class="text-gray-700">Great product! Highly recommend it to everyone looking for quality.</p>
             </div>
 
-            <!-- Card 2 -->
-            <div class="bg-white shadow-lg rounded-lg flex p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                <img src="images/cozy bakrey shop.webp" alt="Listing 2" class="rounded-l-lg w-32 h-32 object-cover">
-                <div class="ml-4 flex flex-col justify-between">
-                    <div>
-                        <h4 class="font-bold text-lg">Cozy Bakery Shop</h4>
-                        <p class="text-gray-600">by: Sweet Treats Realty</p>
-                        <div class="flex items-center mt-2">
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-gray-400"><i class="fa fa-star"></i></span>
-                        </div>
-                        <span class="text-gray-800 font-bold">$1,800 / month</span>
-                        <p class="text-gray-600">Details: <em>800 sq ft</em></p>
+            <!-- Review Card 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Sarah Smith', 5, 'Absolutely love it! The design and quality are superb.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        S
                     </div>
-                    <div class="mt-2">
-                        <button class="bg-blue-500 text-white rounded-lg py-1 px-4 hover:bg-blue-600 transition duration-200">View Details</button>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Sarah Smith</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★★</span>
+                        </div>
                     </div>
                 </div>
+                <p class="text-gray-700">Absolutely love it! The design and quality are superb.</p>
             </div>
 
-            <!-- Card 3 -->
-            <div class="bg-white shadow-lg rounded-lg flex p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-                <img src="images/artisan coffe shop.webp" alt="Listing 3" class="rounded-l-lg w-32 h-32 object-cover">
-                <div class="ml-4 flex flex-col justify-between">
-                    <div>
-                        <h4 class="font-bold text-lg">Artisan Coffee Shop</h4>
-                        <p class="text-gray-600">by: Coffee House Realty</p>
-                        <div class="flex items-center mt-2">
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-yellow-400"><i class="fa fa-star"></i></span>
-                            <span class="text-gray-400"><i class="fa fa-star"></i></span>
-                            <span class="text-gray-400"><i class="fa fa-star"></i></span>
-                        </div>
-                        <span class="text-gray-800 font-bold">$2,500 / month</span>
-                        <p class="text-gray-600">Details: <em>1500 sq ft</em></p>
+            <!-- Review Card 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Michael Johnson', 3, 'It\'s a decent product, but I expected a bit more durability.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        M
                     </div>
-                    <div class="mt-2">
-                        <button class="bg-blue-500 text-white rounded-lg py-1 px-4 hover:bg-blue-600 transition duration-200">View Details</button>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Michael Johnson</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★☆☆</span>
+                        </div>
                     </div>
                 </div>
+                <p class="text-gray-700">It's a decent product, but I expected a bit more durability.</p>
+            </div>
+
+            <!-- Review Card 4 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Alice Brown', 4, 'Very good product, but the delivery took longer than expected.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        A
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Alice Brown</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">Very good product, but the delivery took longer than expected.</p>
+            </div>
+
+            <!-- Review Card 5 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Lily Evans', 5, 'Exceeded my expectations! Excellent quality and fast shipping.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        L
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Lily Evans</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">Exceeded my expectations! Excellent quality and fast shipping.</p>
+            </div>
+
+            <!-- Review Card 6 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('David Williams', 4, 'The product is great, but the customer service could be improved.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        D
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">David Williams</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">The product is great, but the customer service could be improved.</p>
+            </div>
+
+            <!-- Review Card 7 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Karen Taylor', 3, 'The product is okay, but I was expecting better packaging.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        K
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Karen Taylor</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★☆☆</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">The product is okay, but I was expecting better packaging.</p>
+            </div>
+
+            <!-- Review Card 8 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Tom Harris', 4, 'Good value for the money. I would recommend it to others.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        T
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Tom Harris</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">Good value for the money. I would recommend it to others.</p>
+            </div>
+
+            <!-- Review Card 9 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Chloe Martin', 5, 'Excellent quality, I’m really happy with my purchase!')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        C
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Chloe Martin</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">Excellent quality, I’m really happy with my purchase!</p>
+            </div>
+
+            <!-- Review Card 10 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Emma Thompson', 4, 'Good product overall, but the color was slightly different from the picture.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        E
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Emma Thompson</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★☆</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">Good product overall, but the color was slightly different from the picture.</p>
+            </div>
+
+            <!-- Review Card 11 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Chris Miller', 3, 'The product is decent, but not exactly what I was expecting.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        C
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Chris Miller</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★☆☆</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">The product is decent, but not exactly what I was expecting.</p>
+            </div>
+
+            <!-- Review Card 12 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 review-card" onclick="showReview('Nancy Carter', 5, 'Absolutely perfect! Couldn’t be happier with my purchase.')">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        N
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Nancy Carter</h3>
+                        <div class="flex items-center">
+                            <span class="text-yellow-500">Rating: ★★★★★</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700">Absolutely perfect! Couldn’t be happier with my purchase.</p>
             </div>
         </div>
     </div>
-</div>
 
+    <!-- JavaScript for card click action -->
+    <script>
+        function showReview(name, rating, reviewText) {
+            const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+            alert(Review by: ${name}\nRating: ${stars}\n\n${reviewText});
+        }
+    </script>
 
 
 <footer class="bg-white dark:bg-gray-900">
@@ -457,8 +639,5 @@
       </div>
     </div>
 </footer>
-
-<h1>hello</h1>
-<h2>hhhhhh</h2>
 </body>
 </html>

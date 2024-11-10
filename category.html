@@ -5,21 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Page with Icons</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Additional styling for the line */
-        .line {
-            height: 2px;
-            background-color: #ccc;
-            margin: 20px 0;
-        }
-    </style>
-    <script>
-        function showDescription(title, description) {
-            document.getElementById('description-title').innerText = title;
-            document.getElementById('description-text').innerText = description;
-        }
-    </script>
+
+   
 </head>
 <body class="bg-gray-100">
 
@@ -40,7 +29,7 @@
                     <a href="contact.html" class="text-gray-800 hover:underline hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium">Contact Us</a>
                     
                     <!-- Add Your Listing with plus sign -->
-                    <a href="yourlisting.html" class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-4 py-2 rounded-md">
+                    <a id="addListingButton" href="javascript:void(0);" onclick="checkLoginAndRedirect()" class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-4 py-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.75v14.5M5.75 12h14.5"></path>
                         </svg>
@@ -49,8 +38,8 @@
                 </div>
     
                 <!-- Login Dropdown Menu on the right -->
-                <div class="relative group pt-4 -mr-24">
-                    <button class="flex items-center bg-gray-600 text-white hover:bg-gray-500 px-2 py-1 rounded-md">
+                <div id="auth-button" class="relative group pt-4 -mr-24">
+                    <button class="flex items-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition duration-300 ease-in-out">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
                         </svg>
@@ -59,65 +48,80 @@
                     <!-- Dropdown menu for User/Admin Login -->
                     <div class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
                         <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">User Login</a>
-                        <a href="adminlogin.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Admin Login</a>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
+    <script>
 
-    <section class="py-24 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-8">Explore Categories</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-                <!-- Theatre Box -->
-                <a href="#" class="category-box group bg-white p-6 rounded-lg shadow-lg text-center transition-all duration-300 cursor-pointer hover:bg-blue-600 hover:shadow-xl"
-                   onclick="showDescription('Theatre', 'This is a theatre where you can watch movies or performances.')">
-                    <i class="fas fa-theater-masks text-4xl text-blue-600 group-hover:text-white transition-all duration-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800 group-hover:text-white transition-all duration-300 mb-4">Theatre</h3>
-                </a>
+async function checkLoginAndRedirect() {
+        const response = await fetch('/check-session');
+        const data = await response.json();
 
-                <!-- Shop Box -->
-                <a href="#" class="category-box group bg-white p-6 rounded-lg shadow-lg text-center transition-all duration-300 cursor-pointer hover:bg-green-600 hover:shadow-xl"
-                   onclick="showDescription('Shop', 'This is a shop where you can buy different items.')">
-                    <i class="fas fa-shopping-cart text-4xl text-green-600 group-hover:text-white transition-all duration-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800 group-hover:text-white transition-all duration-300 mb-4">Shop</h3>
-                </a>
+        if (data.loggedIn) {
+            window.location.href = 'add-your-listing.html'; // Redirect to the add listing page
+        } else {
+            window.location.href = 'login.html'; // Redirect to the login page
+        }
+    }
+    
+        // Function to check session status and toggle the button
+        async function updateAuthButton() {
+            try {
+                const response = await fetch('/check-session');
+                const data = await response.json();
 
-                <!-- Hotel Box -->
-                <a href="#" class="category-box group bg-white p-6 rounded-lg shadow-lg text-center transition-all duration-300 cursor-pointer hover:bg-red-600 hover:shadow-xl"
-                   onclick="showDescription('Hotel', 'This is a hotel where you can stay during your travels.')">
-                    <i class="fas fa-bed text-4xl text-red-600 group-hover:text-white transition-all duration-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800 group-hover:text-white transition-all duration-300 mb-4">Hotel</h3>
-                </a>
+                const authButtonContainer = document.getElementById('auth-button');
+                authButtonContainer.innerHTML = ''; // Clear the existing content
 
-                <!-- Apartment Box -->
-                <a href="#" class="category-box group bg-white p-6 rounded-lg shadow-lg text-center transition-all duration-300 cursor-pointer hover:bg-yellow-600 hover:shadow-xl"
-                   onclick="showDescription('Apartment', 'This is an apartment available for rent.')">
-                    <i class="fas fa-building text-4xl text-yellow-600 group-hover:text-white transition-all duration-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800 group-hover:text-white transition-all duration-300 mb-4">Apartment</h3>
-                </a>
+                if (data.loggedIn) {
+                    // User is logged in, create Logout button
+                    const logoutForm = document.createElement('form');
+                    logoutForm.action = '/logout';
+                    logoutForm.method = 'POST';
 
-                <!-- Food Box -->
-                <a href="#" class="category-box group bg-white p-6 rounded-lg shadow-lg text-center transition-all duration-300 cursor-pointer hover:bg-purple-600 hover:shadow-xl"
-                   onclick="showDescription('Food', 'This is a food court offering various cuisines.')">
-                    <i class="fas fa-utensils text-4xl text-purple-600 group-hover:text-white transition-all duration-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800 group-hover:text-white transition-all duration-300 mb-4">Food</h3>
-                </a>
-            </div>
-        </div>
-    </section>
+                    const logoutButton = document.createElement('button');
+                    logoutButton.type = 'submit';
+                    logoutButton.className = 'flex items-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition duration-300 ease-in-out';
+                    logoutButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
+                        </svg>
+                        Logout
+                    `;
 
-    <!-- Line Divider -->
-    <div class="line mx-auto w-3/4"></div>
+                    logoutForm.appendChild(logoutButton);
+                    authButtonContainer.appendChild(logoutForm);
+                } else {
+                    // User is not logged in, create Login button
+                    const loginLink = document.createElement('a');
+                    loginLink.href = 'login.html';
+                    loginLink.className = 'flex items-center bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition duration-300 ease-in-out';
+                    loginLink.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 1.5c-3.514 0-10.5 1.758-10.5 5.25v1.5h21v-1.5c0-3.492-6.986-5.25-10.5-5.25z"></path>
+                        </svg>
+                        Login
+                    `;
 
-    <!-- Description Section -->
-    <section class="py-10 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <h3 id="description-title" class="text-3xl font-bold text-center">Click a box to see details</h3>
-            <p id="description-text" class="text-lg text-gray-700 text-center mt-4">The description of the selected box will appear here.</p>
-        </div>
-    </section>
+                    authButtonContainer.appendChild(loginLink);
+                }
+            } catch (error) {
+                console.error('Error checking session status:', error);
+            }
+        }
+
+        // Call the function on page load
+        updateAuthButton();
+    </script>
+    
+   
+
+
+    
+
+    
 
     <footer class="bg-white dark:bg-gray-900">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -132,7 +136,7 @@
                   <div>
                       <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
                       <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                       
+                     
                           <li>
                               <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
                           </li>
@@ -203,6 +207,6 @@
     </footer>
     
     
-
-</body>
-</html>
+    </body>
+    </html>
+    

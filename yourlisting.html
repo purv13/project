@@ -11,6 +11,7 @@
         <div class="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg">
             <h2 class="text-3xl font-bold text-center mb-6">Create a Listing</h2>
             <form id="listingForm" class="space-y-6">
+                
                 <!-- Title -->
                 <div>
                     <label for="title" class="block text-gray-700">Listing Title</label>
@@ -67,22 +68,37 @@
         </div>
     </div>
 
-    <!-- JavaScript for Form Handling (Optional) -->
     <script>
-        document.getElementById('listingForm').addEventListener('submit', function(event) {
+        document.getElementById('listingForm').addEventListener('submit', async function(event) {
             event.preventDefault(); // Prevent default form submission
 
-            // Retrieve form data
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-            const category = document.getElementById('category').value;
-            const price = document.getElementById('price').value;
-            const location = document.getElementById('location').value;
-            const image = document.getElementById('image').files[0];
+            // Collect form data for submission
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('price', document.getElementById('price').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('image', document.getElementById('image').files[0]);
 
-            // Display submitted data (for demo purposes)
-            alert(`Listing Created!\n\nTitle: ${title}\nDescription: ${description}\nCategory: ${category}\nPrice: $${price}\nLocation: ${location}\nImage: ${image.name}`);
-            // Here you can add code to send the data to a server or API
+            // Async POST request to submit listing
+            try {
+                const response = await fetch('/submit-listing', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Listing submitted successfully! Awaiting admin approval.');
+                    document.getElementById('listingForm').reset(); // Clear form on success
+                } else {
+                    alert('Error submitting listing.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Submission failed. Please try again.');
+            }
         });
     </script>
 </body>
